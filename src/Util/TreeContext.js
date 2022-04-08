@@ -7,42 +7,82 @@ export function useTree() {
 }
 
 export default function TreeContext({ children }) {
-  function addChild(bigObject, treeId) {}
-
   const rootTree = {
-    treeId: 1,
-    fullName: "alice",
+    isRoot: true,
+    treeId: Math.floor(Math.random() * 1000),
+    fullName: "Alice",
     treeChildren: [
       {
-        treeId: 2,
-        fullName: "bob",
+        treeId: Math.floor(Math.random() * 1000),
+        fullName: "Bob",
+        isRoot: false,
         treeChildren: [
           {
-            treeId: 4,
-            fullName: "charley",
+            treeId: Math.floor(Math.random() * 1000),
+            isRoot: false,
+            fullName: "Charley",
             treeChildren: [],
           },
         ],
       },
       {
-        treeId: 3,
-        fullName: "bill",
+        treeId: Math.floor(Math.random() * 1000),
+        isRoot: false,
+        fullName: "Bill",
         treeChildren: [],
       },
     ],
   };
   const [bigTree, setBigTree] = useState(rootTree);
+  const [test, setTest] = useState(false);
 
   function addParent(treeObject, newParentName) {
+    let oldTreeObject = { ...treeObject };
+    oldTreeObject.isRoot = false;
     let newParent = {
-      treeId: 0,
+      isRoot: true,
+      treeId: Math.floor(Math.random() * 1000),
       fullName: newParentName,
-      treeChildren: [treeObject],
+      treeChildren: [oldTreeObject],
     };
-    setBigTree([newParent]);
+    setBigTree(newParent);
   }
 
-  const value = { bigTree, setBigTree, addParent, addChild, rootTree };
+  function addChild(bigObject, treeId, childName) {
+    const BranchToAddTo = getBranch(treeId, bigObject);
+    let newTreeChild = {
+      treeId: Math.floor(Math.random() * 1000),
+      isRoot: false,
+      fullName: childName,
+      treeChildren: [],
+    };
+
+    BranchToAddTo.treeChildren.push(newTreeChild);
+    //!=================================================================================================
+    //todo=======> this is bad practice I need to change this ==> START
+    let newObject = { ...bigObject };
+    setBigTree(newObject);
+    //todo=======> this is bad practice I need to change this ==> END
+    //!=================================================================================================
+  }
+
+  function getBranch(treeId, treeObject) {
+    let result;
+    if (treeObject.treeId === treeId) {
+      return treeObject;
+    } else {
+      for (let i = 0; i < treeObject.treeChildren.length; i++) {
+        let currentChild = treeObject.treeChildren[i];
+        result = getBranch(treeId, currentChild);
+        if (result !== false) {
+          return result;
+        }
+      }
+      return false;
+    }
+  }
+
+  const value = { bigTree, setBigTree, addParent, addChild };
 
   return (
     <TreeContextProvider.Provider value={value}>

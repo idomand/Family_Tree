@@ -8,7 +8,6 @@ const TreeItemWrapper = styled.li`
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   width: fit-content;
 `;
 
@@ -22,8 +21,13 @@ const TreeChildrenWrapper = styled.div`
   border: solid red 1px;
 `;
 
-export default function TreeElement({ fullName, treeId, treeChildren }) {
-  const [showChildren, setShowChildren] = useState(false);
+export default function TreeElement({
+  isRoot,
+  fullName,
+  treeId,
+  treeChildren,
+}) {
+  const [showChildren, setShowChildren] = useState(true);
 
   function handleClick() {
     setShowChildren((prv) => !prv);
@@ -32,18 +36,24 @@ export default function TreeElement({ fullName, treeId, treeChildren }) {
   return (
     <>
       <TreeItemWrapper>
-        name:{fullName} ; id: {treeId}
-        <TreeForm />
-        <TreeButtons shouldShow={handleClick} />
+        {fullName} ; id: {treeId}
+        <TreeForm
+          setShowChildren={setShowChildren}
+          isRoot={isRoot}
+          treeId={treeId}
+        />
+        <TreeButtons isShowChildren={showChildren} shouldShow={handleClick} />
       </TreeItemWrapper>
       <TreeChildrenWrapper>
         {showChildren &&
           treeChildren.length > 0 &&
-          treeChildren.map(({ treeId, treeChildren }) => (
+          treeChildren.map(({ fullName, treeId, treeChildren, isRoot }) => (
             <TreeElement
               key={treeId}
               treeId={treeId}
               treeChildren={treeChildren}
+              fullName={fullName}
+              isRoot={isRoot}
             />
           ))}
       </TreeChildrenWrapper>

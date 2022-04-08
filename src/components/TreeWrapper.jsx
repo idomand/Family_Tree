@@ -4,18 +4,18 @@ import { useTree } from "../Util/TreeContext";
 import TreeElement from "./TreeElement";
 
 const Wrapper = styled.main`
-  padding: 30px;
+  padding: 10px;
 `;
 
 export default function TreeWrapper() {
   const { bigTree } = useTree();
-  console.log("bigTree :>> ", bigTree);
   return (
     <Wrapper>
       <TreeElement
         treeId={bigTree.treeId}
         treeChildren={bigTree.treeChildren}
         fullName={bigTree.fullName}
+        isRoot={bigTree.isRoot}
       />
     </Wrapper>
   );

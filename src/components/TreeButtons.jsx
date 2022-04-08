@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BasicButton } from "./Common/StyledButtons";
 const ItemButtonWrapper = styled.div``;
 
-export default function TreeButtons({ shouldShow }) {
+export default function TreeButtons({ shouldShow, isShowChildren }) {
   function hideFunc() {
     shouldShow();
   }
@@ -12,7 +12,9 @@ export default function TreeButtons({ shouldShow }) {
   return (
     <ItemButtonWrapper>
       <BasicButton onClick={deleteFunc}>Delete</BasicButton>
-      <BasicButton onClick={hideFunc}>Hide</BasicButton>
+      <BasicButton onClick={hideFunc}>
+        {isShowChildren ? "Hide" : "Show"}
+      </BasicButton>
     </ItemButtonWrapper>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { BasicButton } from "./Common/StyledButtons";
 import styled from "styled-components";
-
+import { useTree } from "../Util/TreeContext";
 import {
   BasicForm,
   BasicInput,
@@ -18,41 +17,49 @@ const AddChildDiv = styled(BasicDiv)``;
 
 const AddParentDiv = styled(BasicDiv)``;
 
-export default function TreeForm({}) {
+export default function TreeForm({ isRoot, treeId, setShowChildren }) {
+  const { addChild, addParent, bigTree } = useTree();
   const [childName, setChildName] = useState("");
   const [parentName, setParentName] = useState("");
 
   function handleAddChildSubmit(e) {
     e.preventDefault();
+    addChild(bigTree, treeId, childName);
+    setChildName("");
+    setShowChildren(true);
   }
 
   function handleAddParentSubmit(e) {
     e.preventDefault();
+
+    addParent(bigTree, parentName);
+    setParentName("");
   }
 
   return (
     <>
-      <AddParentDiv>
-        <BasicForm onSubmit={handleAddParentSubmit}>
-          <BasicLabel htmlFor="parent">
-            <BasicInput
-              type="text"
-              id="parent"
-              placeholder="Parent Name"
-              name="name"
-              value={parentName}
-              required
-              onChange={(e) => setParentName(e.target.value)}
+      {isRoot && (
+        <AddParentDiv>
+          <BasicForm onSubmit={handleAddParentSubmit}>
+            <BasicLabel htmlFor="parent">
+              <BasicInput
+                type="text"
+                id="parent"
+                placeholder="Parent Name"
+                name="name"
+                value={parentName}
+                required
+                onChange={(e) => setParentName(e.target.value)}
+              />
+            </BasicLabel>
+            <InputSubmit
+              disabled={parentName === ""}
+              type="submit"
+              value="add parent"
             />
-          </BasicLabel>
-          <InputSubmit
-            disabled={parentName === ""}
-            type="submit"
-            value="add parent"
-          />
-        </BasicForm>
-      </AddParentDiv>
-
+          </BasicForm>
+        </AddParentDiv>
+      )}
       <AddChildDiv>
         <BasicForm onSubmit={handleAddChildSubmit}>
           <BasicLabel htmlFor="child">
