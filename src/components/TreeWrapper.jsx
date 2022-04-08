@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTree } from "../Util/TreeContext";
+import FirstElementInput from "./FirstElementInput";
 import TreeElement from "./TreeElement";
 
 const Wrapper = styled.main`
@@ -9,14 +10,22 @@ const Wrapper = styled.main`
 
 export default function TreeWrapper() {
   const { bigTree } = useTree();
+
+  console.log("bigTree :>> ", bigTree);
+
   return (
     <Wrapper>
-      <TreeElement
-        treeId={bigTree.treeId}
-        treeChildren={bigTree.treeChildren}
-        fullName={bigTree.fullName}
-        isRoot={bigTree.isRoot}
-      />
+      <FirstElementInput />
+
+      {Object.keys(bigTree).length !== 0 && (
+        <TreeElement
+          parentId={bigTree.parentId}
+          treeId={bigTree.treeId}
+          treeChildren={bigTree.treeChildren}
+          fullName={bigTree.fullName}
+          isRoot={bigTree.isRoot}
+        />
+      )}
     </Wrapper>
   );
 }

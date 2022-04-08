@@ -17,7 +17,12 @@ const AddChildDiv = styled(BasicDiv)``;
 
 const AddParentDiv = styled(BasicDiv)``;
 
-export default function TreeForm({ isRoot, treeId, setShowChildren }) {
+export default function TreeForm({
+  isRoot,
+  treeId,
+  setShowChildren,
+  parentId,
+}) {
   const { addChild, addParent, bigTree } = useTree();
   const [childName, setChildName] = useState("");
   const [parentName, setParentName] = useState("");

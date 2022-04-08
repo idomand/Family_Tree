@@ -4,7 +4,9 @@ import TreeButtons from "./TreeButtons";
 import TreeForm from "./TreeForm";
 
 const TreeItemWrapper = styled.li`
-  border: solid red;
+  border: solid blueviolet 1.5px;
+  border-radius: 5px;
+  padding: 10px;
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -18,7 +20,6 @@ const TreeChildrenWrapper = styled.div`
   left: 25px;
   border-left: 1px solid;
   padding-left: 15px;
-  border: solid red 1px;
 `;
 
 export default function TreeElement({
@@ -26,6 +27,7 @@ export default function TreeElement({
   fullName,
   treeId,
   treeChildren,
+  parentId,
 }) {
   const [showChildren, setShowChildren] = useState(true);
 
@@ -36,26 +38,37 @@ export default function TreeElement({
   return (
     <>
       <TreeItemWrapper>
-        {fullName} ; id: {treeId}
+        <div>
+          {fullName} ; id: {treeId}
+        </div>
         <TreeForm
           setShowChildren={setShowChildren}
           isRoot={isRoot}
           treeId={treeId}
+          parentId={parentId}
         />
-        <TreeButtons isShowChildren={showChildren} shouldShow={handleClick} />
+        <TreeButtons
+          isShowChildren={showChildren}
+          shouldShow={handleClick}
+          treeId={treeId}
+          parentId={parentId}
+        />
       </TreeItemWrapper>
       <TreeChildrenWrapper>
         {showChildren &&
           treeChildren.length > 0 &&
-          treeChildren.map(({ fullName, treeId, treeChildren, isRoot }) => (
-            <TreeElement
-              key={treeId}
-              treeId={treeId}
-              treeChildren={treeChildren}
-              fullName={fullName}
-              isRoot={isRoot}
-            />
-          ))}
+          treeChildren.map(
+            ({ fullName, treeId, treeChildren, isRoot, parentId }) => (
+              <TreeElement
+                key={treeId}
+                treeId={treeId}
+                treeChildren={treeChildren}
+                fullName={fullName}
+                isRoot={isRoot}
+                parentId={parentId}
+              />
+            )
+          )}
       </TreeChildrenWrapper>
     </>
   );
