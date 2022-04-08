@@ -11,11 +11,27 @@ export default function TreeContext({ children }) {
 
   const rootTree = {
     treeId: 1,
-    fullName: "bob",
-    treeChildren: [],
-    // parent: null,
+    fullName: "alice",
+    treeChildren: [
+      {
+        treeId: 2,
+        fullName: "bob",
+        treeChildren: [
+          {
+            treeId: 4,
+            fullName: "charley",
+            treeChildren: [],
+          },
+        ],
+      },
+      {
+        treeId: 3,
+        fullName: "bill",
+        treeChildren: [],
+      },
+    ],
   };
-  const [treeArray, setTreeArray] = useState([rootTree]);
+  const [bigTree, setBigTree] = useState(rootTree);
 
   function addParent(treeArray, newParentName) {
     let newParent = {
@@ -24,10 +40,10 @@ export default function TreeContext({ children }) {
       treeChildren: treeArray,
       // parent: null,
     };
-    setTreeArray([newParent]);
+    setBigTree([newParent]);
   }
 
-  const value = { treeArray, setTreeArray, addParent, addChild, rootTree };
+  const value = { bigTree, setBigTree, addParent, addChild, rootTree };
 
   return (
     <TreeContextProvider.Provider value={value}>

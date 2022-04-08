@@ -1,11 +1,12 @@
 import "./App.css";
-import TreeList from "./components/TreeList";
+import TreeWrapper from "./components/TreeWrapper";
 import TreeContext from "./Util/TreeContext";
+
 function App() {
   return (
     <div className="App">
       <TreeContext>
-        <TreeList />
+        <TreeWrapper />
       </TreeContext>
     </div>
   );
