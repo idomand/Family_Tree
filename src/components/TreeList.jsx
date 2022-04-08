@@ -22,6 +22,7 @@ export default function TreeList({ bigTree }) {
           left: 25,
           borderLeft: "1px solid",
           paddingLeft: 15,
+          border: "solid red 1px",
         }}
       >
         {showChildren &&

@@ -33,12 +33,11 @@ export default function TreeContext({ children }) {
   };
   const [bigTree, setBigTree] = useState(rootTree);
 
-  function addParent(treeArray, newParentName) {
+  function addParent(treeObject, newParentName) {
     let newParent = {
-      treeId: 1,
+      treeId: 0,
       fullName: newParentName,
-      treeChildren: treeArray,
-      // parent: null,
+      treeChildren: [treeObject],
     };
     setBigTree([newParent]);
   }
