@@ -3,11 +3,11 @@ import TreeList from "./components/TreeList";
 import TreeContext from "./Util/TreeContext";
 function App() {
   return (
-    <TreeContext>
-      <div className="App">
+    <div className="App">
+      <TreeContext>
         <TreeList />
-      </div>
-    </TreeContext>
+      </TreeContext>
+    </div>
   );
 }
 
