@@ -38,9 +38,7 @@ export default function TreeElement({
   return (
     <>
       <TreeItemWrapper>
-        <div>
-          {fullName} ; id: {treeId}
-        </div>
+        <div>Full Name: {fullName}</div>
         <TreeForm
           setShowChildren={setShowChildren}
           isRoot={isRoot}

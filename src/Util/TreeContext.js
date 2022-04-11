@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const TreeContextProvider = React.createContext();
 
@@ -16,7 +17,7 @@ export default function TreeContext({ children }) {
     let firstObject = {
       parentId: null,
       isRoot: true,
-      treeId: Math.floor(Math.random() * 1000),
+      treeId: uuidv4(),
       fullName: elementName,
       treeChildren: [],
     };
@@ -42,7 +43,7 @@ export default function TreeContext({ children }) {
     let newTreeObject = { ...bigTree };
     const BranchToAddTo = getBranch(treeId, newTreeObject);
     let newTreeChild = {
-      treeId: Math.floor(Math.random() * 1000),
+      treeId: uuidv4(),
       isRoot: false,
       fullName: childName,
       treeChildren: [],
@@ -75,7 +76,7 @@ export default function TreeContext({ children }) {
   }
 
   function addParent(newParentName) {
-    let newId = Math.floor(Math.random() * 1000);
+    let newId = uuidv4();
     let oldTreeObject = { ...bigTree };
     oldTreeObject.isRoot = false;
     oldTreeObject.parentId = newId;
