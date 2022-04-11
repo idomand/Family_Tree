@@ -9,8 +9,9 @@ import {
 } from "./Common/StyledFormElements";
 
 const BasicDiv = styled.div`
-  display: flex;
-  border: solid green;
+  border: solid lightblue 1px;
+  margin-top: 3px;
+  border-radius: 10px;
 `;
 
 const AddChildDiv = styled(BasicDiv)``;

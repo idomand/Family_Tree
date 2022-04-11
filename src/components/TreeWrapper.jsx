@@ -6,6 +6,23 @@ import TreeElement from "./TreeElement";
 
 const Wrapper = styled.main`
   padding: 10px;
+
+  border: solid 1px purple;
+  border-radius: 5px;
+`;
+
+const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const HeaderText = styled.h1`
+  margin: 5px;
+`;
+
+const SubHeaderText = styled.h4`
+  margin: 5px;
 `;
 
 export default function TreeWrapper() {
@@ -13,6 +30,19 @@ export default function TreeWrapper() {
 
   return (
     <Wrapper>
+      <HeaderDiv>
+        <HeaderText>Infinite Family Tree</HeaderText>
+        <SubHeaderText>
+          Source Code:{" "}
+          <a
+            rel="noreferrer"
+            href="https://github.com/idomand/Family_Tree"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </SubHeaderText>
+      </HeaderDiv>
       <FirstElementInput />
 
       {Object.keys(bigTree).length !== 0 && (

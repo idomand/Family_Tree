@@ -9,7 +9,11 @@ import {
 } from "./Common/StyledFormElements";
 
 const FirstElementWrapper = styled.div`
-  border: solid blue;
+  border: solid lightblue;
+  width: fit-content;
+  padding: 15px;
+  background-color: #caedfc;
+  border-radius: 15px;
 `;
 
 export default function FirstElementInput() {
@@ -26,7 +30,7 @@ export default function FirstElementInput() {
   }
 
   return (
-    <div>
+    <>
       {showFirstElementInput && (
         <FirstElementWrapper>
           <BasicForm onSubmit={handelFirstSubmit}>
@@ -34,7 +38,7 @@ export default function FirstElementInput() {
               <BasicInput
                 type="text"
                 id="firstName"
-                placeholder="FirstName"
+                placeholder="Enter Full Name"
                 name="name"
                 value={firstName}
                 required
@@ -44,11 +48,11 @@ export default function FirstElementInput() {
             <InputSubmit
               disabled={firstName === ""}
               type="submit"
-              value="add firstName"
+              value="Add Name"
             />
           </BasicForm>
         </FirstElementWrapper>
       )}
-    </div>
+    </>
   );
 }
