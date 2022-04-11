@@ -23,6 +23,7 @@ export default function TreeContext({ children }) {
     };
     setBigTree(firstObject);
   }
+
   function getBranch(treeId, treeObject) {
     let result;
     if (treeObject.treeId === treeId) {
