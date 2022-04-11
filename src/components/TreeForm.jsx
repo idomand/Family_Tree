@@ -17,15 +17,19 @@ const AddChildDiv = styled(BasicDiv)``;
 
 const AddParentDiv = styled(BasicDiv)``;
 
-export default function TreeForm({
-  isRoot,
-  treeId,
-  setShowChildren,
-  parentId,
-}) {
-  const { addChild, addParent } = useTree();
+const EditFullNameDiv = styled(BasicDiv)``;
+
+export default function TreeForm({ isRoot, treeId, setShowChildren }) {
+  const { addChild, addParent, editElementName } = useTree();
   const [childName, setChildName] = useState("");
   const [parentName, setParentName] = useState("");
+  const [newFullName, setNewFullName] = useState("");
+
+  function handelNewNameSubmit(e) {
+    e.preventDefault();
+    editElementName(treeId, newFullName);
+    setNewFullName("");
+  }
 
   function handleAddChildSubmit(e) {
     e.preventDefault();
@@ -85,6 +89,27 @@ export default function TreeForm({
           />
         </BasicForm>
       </AddChildDiv>
+
+      <EditFullNameDiv>
+        <BasicForm onSubmit={handelNewNameSubmit}>
+          <BasicLabel htmlFor="newFullName">
+            <BasicInput
+              type="text"
+              id="newFullName"
+              placeholder="Edit Name"
+              name="new name"
+              value={newFullName}
+              required
+              onChange={(e) => setNewFullName(e.target.value)}
+            />
+          </BasicLabel>
+          <InputSubmit
+            disabled={newFullName === ""}
+            type="submit"
+            value="Edit Name"
+          />
+        </BasicForm>
+      </EditFullNameDiv>
     </>
   );
 }

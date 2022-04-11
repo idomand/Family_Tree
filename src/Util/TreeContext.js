@@ -41,7 +41,6 @@ export default function TreeContext({ children }) {
   function addChild(treeId, childName) {
     let newTreeObject = { ...bigTree };
     const BranchToAddTo = getBranch(treeId, newTreeObject);
-    console.log("BranchToAddTo", BranchToAddTo);
     let newTreeChild = {
       treeId: Math.floor(Math.random() * 1000),
       isRoot: false,
@@ -50,6 +49,13 @@ export default function TreeContext({ children }) {
       parentId: BranchToAddTo.treeId,
     };
     BranchToAddTo.treeChildren.push(newTreeChild);
+    setBigTree(newTreeObject);
+  }
+
+  function editElementName(treeId, newName) {
+    let newTreeObject = { ...bigTree };
+    const branchToEdit = getBranch(treeId, newTreeObject);
+    branchToEdit.fullName = newName;
     setBigTree(newTreeObject);
   }
 
@@ -91,6 +97,7 @@ export default function TreeContext({ children }) {
     showFirstElementInput,
     setShowFirstElementInput,
     deleteElement,
+    editElementName,
   };
 
   return (
