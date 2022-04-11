@@ -11,8 +11,6 @@ const Wrapper = styled.main`
 export default function TreeWrapper() {
   const { bigTree } = useTree();
 
-  console.log("bigTree :>> ", bigTree);
-
   return (
     <Wrapper>
       <FirstElementInput />

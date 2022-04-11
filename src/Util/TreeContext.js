@@ -12,41 +12,16 @@ export default function TreeContext({ children }) {
   const [bigTree, setBigTree] = useState(rootTree);
   const [showFirstElementInput, setShowFirstElementInput] = useState(true);
 
-  function addParent(treeObject, newParentName) {
-    let newId = Math.floor(Math.random() * 1000);
-
-    let oldTreeObject = { ...treeObject };
-    oldTreeObject.isRoot = false;
-    oldTreeObject.parentId = newId;
-
-    let newParent = {
-      isRoot: true,
-      treeId: newId,
-      fullName: newParentName,
-      treeChildren: [oldTreeObject],
+  function addFirstElement(elementName) {
+    let firstObject = {
       parentId: null,
-    };
-    setBigTree(newParent);
-  }
-
-  function addChild(bigObject, treeId, childName) {
-    const BranchToAddTo = getBranch(treeId, bigObject);
-    let newTreeChild = {
+      isRoot: true,
       treeId: Math.floor(Math.random() * 1000),
-      isRoot: false,
-      fullName: childName,
+      fullName: elementName,
       treeChildren: [],
-      parentId: BranchToAddTo.treeId,
     };
-    BranchToAddTo.treeChildren.push(newTreeChild);
-    //!=================================================================================================
-    //todo=======> this is bad practice I need to change this ==> START
-    let newObject = { ...bigObject };
-    setBigTree(newObject);
-    //todo=======> this is bad practice I need to change this ==> END
-    //!=================================================================================================
+    setBigTree(firstObject);
   }
-
   function getBranch(treeId, treeObject) {
     let result;
     if (treeObject.treeId === treeId) {
@@ -62,15 +37,20 @@ export default function TreeContext({ children }) {
       return false;
     }
   }
-  function addFirstElement(elementName) {
-    let firstObject = {
-      parentId: null,
-      isRoot: true,
+
+  function addChild(treeId, childName) {
+    let newTreeObject = { ...bigTree };
+    const BranchToAddTo = getBranch(treeId, newTreeObject);
+    console.log("BranchToAddTo", BranchToAddTo);
+    let newTreeChild = {
       treeId: Math.floor(Math.random() * 1000),
-      fullName: elementName,
+      isRoot: false,
+      fullName: childName,
       treeChildren: [],
+      parentId: BranchToAddTo.treeId,
     };
-    setBigTree(firstObject);
+    BranchToAddTo.treeChildren.push(newTreeChild);
+    setBigTree(newTreeObject);
   }
 
   function deleteElement(parentId, treeId) {
@@ -78,15 +58,29 @@ export default function TreeContext({ children }) {
       setBigTree({});
       setShowFirstElementInput(true);
     } else {
-      const BranchToRemoveFrom = getBranch(parentId, bigTree);
-
-      let newBranch = BranchToRemoveFrom.treeChildren.filter(
+      let newTreeObject = { ...bigTree };
+      const BranchToRemoveFrom = getBranch(parentId, newTreeObject);
+      let newChildrenArray = BranchToRemoveFrom.treeChildren.filter(
         (element) => element.treeId !== treeId
       );
-
-      console.log("newBranch", newBranch);
-      console.log("BranchToRemoveFrom", BranchToRemoveFrom.treeChildren);
+      BranchToRemoveFrom.treeChildren = newChildrenArray;
+      setBigTree(newTreeObject);
     }
+  }
+
+  function addParent(newParentName) {
+    let newId = Math.floor(Math.random() * 1000);
+    let oldTreeObject = { ...bigTree };
+    oldTreeObject.isRoot = false;
+    oldTreeObject.parentId = newId;
+    let newParent = {
+      isRoot: true,
+      treeId: newId,
+      fullName: newParentName,
+      treeChildren: [oldTreeObject],
+      parentId: null,
+    };
+    setBigTree(newParent);
   }
 
   const value = {

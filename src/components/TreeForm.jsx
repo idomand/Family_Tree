@@ -23,13 +23,13 @@ export default function TreeForm({
   setShowChildren,
   parentId,
 }) {
-  const { addChild, addParent, bigTree } = useTree();
+  const { addChild, addParent } = useTree();
   const [childName, setChildName] = useState("");
   const [parentName, setParentName] = useState("");
 
   function handleAddChildSubmit(e) {
     e.preventDefault();
-    addChild(bigTree, treeId, childName);
+    addChild(treeId, childName);
     setChildName("");
     setShowChildren(true);
   }
@@ -37,7 +37,7 @@ export default function TreeForm({
   function handleAddParentSubmit(e) {
     e.preventDefault();
 
-    addParent(bigTree, parentName);
+    addParent(parentName);
     setParentName("");
   }
 
